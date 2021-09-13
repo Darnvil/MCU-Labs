@@ -1,0 +1,28 @@
+main
+	Sound_Init
+	task1
+		enter_value_to_portd_array
+			Div_16x16_S
+		Sound_Play
+			Get_Fosc_kHz
+			Delay_Cyc
+			Mul_32x32
+			Div_32x32_U
+			Div_16x16_U
+	play_popular_song
+		d5
+			Sound_Play
+		g5
+			Sound_Play
+		h5
+			Sound_Play
+		a5
+			Sound_Play
+		f5
+			Sound_Play
+		e5
+			Sound_Play
+		ad5
+			Sound_Play
+	__CC2DW
+Timer0Overflow_ISR
