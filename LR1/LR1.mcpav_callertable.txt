@@ -1,4 +1,24 @@
 main
+	task_picker
+		clear_portd
+		task1
+			clear_portd
+			num_changer
+				clear_portd
+				strlen
+				atoi
+					isdigit
+					Mul_16x16
+			num_changer_with_dot
+				num_changer
+		task2
+			clear_portd
+			rand
+				srand
+				Mul_32x32
+			Div_16x16_S
+			HWMul_16x16
+		task3
+			clear_portd
 	__CC2DW
-	Div_16x16_S
 Timer0Overflow_ISR

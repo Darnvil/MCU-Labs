@@ -1907,6 +1907,7 @@ _uart_noparity
 _uart_oddparity
 _uart_one_stopbit
 _uart_two_stopbits
+a
 abchannelhsampfactor
 abchannelhsampfactor
 abchannelhuffactablemap
@@ -2057,6 +2058,7 @@ awhuffdcsymstart
 awhuffdcsymstart
 awquanttable
 awquanttable
+b
 b
 b
 b
@@ -2235,6 +2237,7 @@ cl_white
 cl_white_16bit
 cl_yellow
 cl_yellow_16bit
+clear_portd
 clearalpha
 clearalpha
 clearalpha
@@ -3956,6 +3959,7 @@ jtd
 jtd_bit
 jtrf
 jtrf_bit
+k
 keypad_init
 keypad_key_click
 keypad_key_press
@@ -4122,8 +4126,9 @@ name
 name
 nr_free_blocks
 num
+num_changer
+num_changer_with_dot
 num_mask
-number
 ocdr
 ocf0
 ocf0_bit
@@ -4268,6 +4273,7 @@ outswizzle
 ow_read
 ow_reset
 ow_write
+p_ch
 pbcurrenthuffsymboltable
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
@@ -4549,6 +4555,7 @@ renderwritetrigger
 renderwritetrigger
 renderwritetrigger
 rep_start
+res
 rev
 rev
 rev
@@ -5231,6 +5238,7 @@ stmpe610_tscontrol
 stmpe610_tsidrive
 stmpe610_writereg
 stmpe610_zdatafraction
+str
 strcat
 strchr
 strcmp
@@ -5309,6 +5317,10 @@ tag
 tag
 tan
 tanh
+task_picker
+task1
+task2
+task3
 tccr0
 tccr1a
 tccr1b
