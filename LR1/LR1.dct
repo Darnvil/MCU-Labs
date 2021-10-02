@@ -2198,6 +2198,7 @@ cf_read_sector
 cf_write_byte
 cf_write_init
 cf_write_sector
+ch
 character8x7
 charsetdsc
 charsetdsc
@@ -4273,7 +4274,6 @@ outswizzle
 ow_read
 ow_reset
 ow_write
-p_ch
 pbcurrenthuffsymboltable
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
@@ -5238,7 +5238,6 @@ stmpe610_tscontrol
 stmpe610_tsidrive
 stmpe610_writereg
 stmpe610_zdatafraction
-str
 strcat
 strchr
 strcmp

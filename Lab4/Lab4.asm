@@ -30,9 +30,9 @@ _Timer0Overflow_ISR:
 ;Lab4.c,28 :: 		if (shifter > 8u)
 	LDI        R16, 8
 	CP         R16, R17
-	BRLO       L__Timer0Overflow_ISR31
+	BRLO       L__Timer0Overflow_ISR33
 	JMP        L_Timer0Overflow_ISR0
-L__Timer0Overflow_ISR31:
+L__Timer0Overflow_ISR33:
 ;Lab4.c,29 :: 		shifter = 1;
 	LDI        R27, 1
 	STS        _shifter+0, R27
@@ -45,9 +45,9 @@ L_Timer0Overflow_ISR0:
 ;Lab4.c,33 :: 		if (portd_index > 3u)
 	LDI        R16, 3
 	CP         R16, R17
-	BRLO       L__Timer0Overflow_ISR32
+	BRLO       L__Timer0Overflow_ISR34
 	JMP        L_Timer0Overflow_ISR1
-L__Timer0Overflow_ISR32:
+L__Timer0Overflow_ISR34:
 ;Lab4.c,34 :: 		portd_index = 0; // turn on 1st, turn off 2nd 7seg.
 	LDI        R27, 0
 	STS        _portd_index+0, R27
@@ -71,9 +71,9 @@ L_enter_value_to_portd_array2:
 	LDI        R17, 0
 	CP         R16, R2
 	CPC        R17, R3
-	BRLT       L__enter_value_to_portd_array34
+	BRLT       L__enter_value_to_portd_array36
 	JMP        L_enter_value_to_portd_array3
-L__enter_value_to_portd_array34:
+L__enter_value_to_portd_array36:
 ;Lab4.c,41 :: 		digit = num_mask[value % 10];
 	PUSH       R3
 	PUSH       R2
@@ -152,9 +152,9 @@ L_task16:
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__task136
+	BRLT       L__task138
 	JMP        L_task17
-L__task136:
+L__task138:
 ;Lab4.c,55 :: 		PORTD = sequence[j];
 	LDS        R16, _j+0
 	LDS        R17, _j+1
@@ -183,10 +183,10 @@ L__task136:
 	LDI        R27, 5
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,58 :: 		Delay_ms(1000); // Do we need to change that?
-	LDI        R18, 51
-	LDI        R17, 187
-	LDI        R16, 224
+;Lab4.c,58 :: 		Delay_ms(250); // Do we need to change that?
+	LDI        R18, 13
+	LDI        R17, 175
+	LDI        R16, 183
 L_task18:
 	DEC        R16
 	BRNE       L_task18
@@ -195,7 +195,6 @@ L_task18:
 	DEC        R18
 	BRNE       L_task18
 	NOP
-	NOP
 ;Lab4.c,59 :: 		j++;
 	LDS        R16, _j+0
 	LDS        R17, _j+1
@@ -203,10 +202,17 @@ L_task18:
 	SBCI       R17, 255
 	STS        _j+0, R16
 	STS        _j+1, R17
-;Lab4.c,60 :: 		}
+;Lab4.c,60 :: 		if (PINA7_bit)
+	IN         R27, PINA7_bit+0
+	SBRS       R27, BitPos(PINA7_bit+0)
+	JMP        L_task110
+;Lab4.c,61 :: 		return;
+	JMP        L_end_task1
+L_task110:
+;Lab4.c,62 :: 		}
 	JMP        L_task16
 L_task17:
-;Lab4.c,61 :: 		Sound_Play(440, 100);
+;Lab4.c,63 :: 		Sound_Play(440, 100);
 	LDI        R27, 100
 	MOV        R4, R27
 	LDI        R27, 0
@@ -216,25 +222,25 @@ L_task17:
 	LDI        R27, 1
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,62 :: 		j--;
+;Lab4.c,64 :: 		j--;
 	LDS        R16, _j+0
 	LDS        R17, _j+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _j+0, R16
 	STS        _j+1, R17
-;Lab4.c,63 :: 		while (j > 0)
-L_task110:
+;Lab4.c,65 :: 		while (j > 0)
+L_task111:
 	LDS        R18, _j+0
 	LDS        R19, _j+1
 	LDI        R16, 0
 	LDI        R17, 0
 	CP         R16, R18
 	CPC        R17, R19
-	BRLT       L__task137
-	JMP        L_task111
-L__task137:
-;Lab4.c,65 :: 		PORTD = sequence[j];
+	BRLT       L__task139
+	JMP        L_task112
+L__task139:
+;Lab4.c,67 :: 		PORTD = sequence[j];
 	LDS        R16, _j+0
 	LDS        R17, _j+1
 	MOVW       R18, R16
@@ -247,12 +253,12 @@ L__task137:
 	ADC        R31, R17
 	LD         R16, Z
 	OUT        PORTD+0, R16
-;Lab4.c,66 :: 		enter_value_to_portd_array(PORTD);
+;Lab4.c,68 :: 		enter_value_to_portd_array(PORTD);
 	MOV        R2, R16
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _enter_value_to_portd_array+0
-;Lab4.c,67 :: 		Sound_Play(1318, 100);
+;Lab4.c,69 :: 		Sound_Play(1318, 100);
 	LDI        R27, 100
 	MOV        R4, R27
 	LDI        R27, 0
@@ -262,32 +268,38 @@ L__task137:
 	LDI        R27, 5
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,68 :: 		Delay_ms(1000); // Do we need to change that?
-	LDI        R18, 51
-	LDI        R17, 187
-	LDI        R16, 224
-L_task112:
+;Lab4.c,70 :: 		Delay_ms(250); // Do we need to change that?
+	LDI        R18, 13
+	LDI        R17, 175
+	LDI        R16, 183
+L_task113:
 	DEC        R16
-	BRNE       L_task112
+	BRNE       L_task113
 	DEC        R17
-	BRNE       L_task112
+	BRNE       L_task113
 	DEC        R18
-	BRNE       L_task112
+	BRNE       L_task113
 	NOP
-	NOP
-;Lab4.c,69 :: 		j--;
+;Lab4.c,71 :: 		j--;
 	LDS        R16, _j+0
 	LDS        R17, _j+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _j+0, R16
 	STS        _j+1, R17
-;Lab4.c,70 :: 		}
-	JMP        L_task110
-L_task111:
-;Lab4.c,71 :: 		}
+;Lab4.c,72 :: 		if (PINA7_bit)
+	IN         R27, PINA7_bit+0
+	SBRS       R27, BitPos(PINA7_bit+0)
+	JMP        L_task115
+;Lab4.c,73 :: 		return;
+	JMP        L_end_task1
+L_task115:
+;Lab4.c,74 :: 		}
+	JMP        L_task111
+L_task112:
+;Lab4.c,78 :: 		}
 	JMP        L_task14
-;Lab4.c,72 :: 		}
+;Lab4.c,79 :: 		}
 L_end_task1:
 	POP        R5
 	POP        R4
@@ -298,8 +310,8 @@ L_end_task1:
 
 _d5:
 
-;Lab4.c,74 :: 		void d5(int duration)
-;Lab4.c,76 :: 		Sound_Play(1244, duration);
+;Lab4.c,81 :: 		void d5(int duration)
+;Lab4.c,83 :: 		Sound_Play(1244, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -310,7 +322,7 @@ _d5:
 	LDI        R27, 4
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,77 :: 		}
+;Lab4.c,84 :: 		}
 L_end_d5:
 	POP        R5
 	POP        R4
@@ -321,8 +333,8 @@ L_end_d5:
 
 _e5:
 
-;Lab4.c,79 :: 		void e5(int duration)
-;Lab4.c,81 :: 		Sound_Play(1318, duration);
+;Lab4.c,86 :: 		void e5(int duration)
+;Lab4.c,88 :: 		Sound_Play(1318, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -333,7 +345,7 @@ _e5:
 	LDI        R27, 5
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,82 :: 		}
+;Lab4.c,89 :: 		}
 L_end_e5:
 	POP        R5
 	POP        R4
@@ -344,8 +356,8 @@ L_end_e5:
 
 _f5:
 
-;Lab4.c,83 :: 		void f5(int duration)
-;Lab4.c,85 :: 		Sound_Play(1396, duration);
+;Lab4.c,90 :: 		void f5(int duration)
+;Lab4.c,92 :: 		Sound_Play(1396, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -356,7 +368,7 @@ _f5:
 	LDI        R27, 5
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,86 :: 		}
+;Lab4.c,93 :: 		}
 L_end_f5:
 	POP        R5
 	POP        R4
@@ -367,8 +379,8 @@ L_end_f5:
 
 _g5:
 
-;Lab4.c,87 :: 		void g5(int duration)
-;Lab4.c,89 :: 		Sound_Play(1568, duration);
+;Lab4.c,94 :: 		void g5(int duration)
+;Lab4.c,96 :: 		Sound_Play(1568, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -379,7 +391,7 @@ _g5:
 	LDI        R27, 6
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,90 :: 		}
+;Lab4.c,97 :: 		}
 L_end_g5:
 	POP        R5
 	POP        R4
@@ -390,8 +402,8 @@ L_end_g5:
 
 _a5:
 
-;Lab4.c,91 :: 		void a5(int duration)
-;Lab4.c,93 :: 		Sound_Play(1720, duration);
+;Lab4.c,98 :: 		void a5(int duration)
+;Lab4.c,100 :: 		Sound_Play(1720, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -402,7 +414,7 @@ _a5:
 	LDI        R27, 6
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,94 :: 		}
+;Lab4.c,101 :: 		}
 L_end_a5:
 	POP        R5
 	POP        R4
@@ -413,8 +425,8 @@ L_end_a5:
 
 _ad5:
 
-;Lab4.c,95 :: 		void ad5(int duration)
-;Lab4.c,97 :: 		Sound_Play(1865, duration);
+;Lab4.c,102 :: 		void ad5(int duration)
+;Lab4.c,104 :: 		Sound_Play(1865, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -425,7 +437,7 @@ _ad5:
 	LDI        R27, 7
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,98 :: 		}
+;Lab4.c,105 :: 		}
 L_end_ad5:
 	POP        R5
 	POP        R4
@@ -436,8 +448,8 @@ L_end_ad5:
 
 _h5:
 
-;Lab4.c,100 :: 		void h5(int duration)
-;Lab4.c,102 :: 		Sound_Play(1975, duration);
+;Lab4.c,107 :: 		void h5(int duration)
+;Lab4.c,109 :: 		Sound_Play(1975, duration);
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -448,7 +460,7 @@ _h5:
 	LDI        R27, 7
 	MOV        R3, R27
 	CALL       _Sound_Play+0
-;Lab4.c,103 :: 		}
+;Lab4.c,110 :: 		}
 L_end_h5:
 	POP        R5
 	POP        R4
@@ -459,8 +471,8 @@ L_end_h5:
 
 _play_popular_song:
 
-;Lab4.c,105 :: 		void play_popular_song()
-;Lab4.c,107 :: 		d5(QUARTER_NOTE_DUR);
+;Lab4.c,112 :: 		void play_popular_song()
+;Lab4.c,114 :: 		d5(QUARTER_NOTE_DUR);
 	PUSH       R2
 	PUSH       R3
 	LDI        R27, 154
@@ -468,99 +480,28 @@ _play_popular_song:
 	LDI        R27, 1
 	MOV        R3, R27
 	CALL       _d5+0
-;Lab4.c,108 :: 		g5(QUARTER_NOTE_DUR);
+;Lab4.c,115 :: 		g5(QUARTER_NOTE_DUR);
 	LDI        R27, 154
 	MOV        R2, R27
 	LDI        R27, 1
 	MOV        R3, R27
 	CALL       _g5+0
-;Lab4.c,109 :: 		h5(EIGTH_NOTE_DUR);
+;Lab4.c,116 :: 		h5(EIGTH_NOTE_DUR);
 	LDI        R27, 205
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _h5+0
-;Lab4.c,110 :: 		a5(HALF_NOTE_DUR);
+;Lab4.c,117 :: 		a5(HALF_NOTE_DUR);
 	LDI        R27, 53
 	MOV        R2, R27
 	LDI        R27, 3
 	MOV        R3, R27
 	CALL       _a5+0
-;Lab4.c,111 :: 		Delay_ms(EIGTH_NOTE_DUR);
+;Lab4.c,118 :: 		Delay_ms(EIGTH_NOTE_DUR);
 	LDI        R18, 11
 	LDI        R17, 103
 	LDI        R16, 78
-L_play_popular_song14:
-	DEC        R16
-	BRNE       L_play_popular_song14
-	DEC        R17
-	BRNE       L_play_popular_song14
-	DEC        R18
-	BRNE       L_play_popular_song14
-;Lab4.c,112 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,113 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,114 :: 		f5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,115 :: 		e5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _e5+0
-;Lab4.c,116 :: 		d5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _d5+0
-;Lab4.c,117 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,118 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,119 :: 		f5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,120 :: 		e5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _e5+0
-;Lab4.c,121 :: 		d5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _d5+0
-;Lab4.c,122 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
-	LDI        R18, 6
-	LDI        R17, 45
-	LDI        R16, 168
 L_play_popular_song16:
 	DEC        R16
 	BRNE       L_play_popular_song16
@@ -568,25 +509,67 @@ L_play_popular_song16:
 	BRNE       L_play_popular_song16
 	DEC        R18
 	BRNE       L_play_popular_song16
-;Lab4.c,123 :: 		g5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,119 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,120 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,121 :: 		f5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
-	CALL       _g5+0
-;Lab4.c,124 :: 		a5(SIXTEENTH_NOTE_DUR);
+	CALL       _f5+0
+;Lab4.c,122 :: 		e5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
-	CALL       _a5+0
-;Lab4.c,125 :: 		ad5(SIXTEENTH_NOTE_DUR);
+	CALL       _e5+0
+;Lab4.c,123 :: 		d5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _d5+0
+;Lab4.c,124 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,125 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,126 :: 		f5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
-	CALL       _ad5+0
-;Lab4.c,126 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
+	CALL       _f5+0
+;Lab4.c,127 :: 		e5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _e5+0
+;Lab4.c,128 :: 		d5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _d5+0
+;Lab4.c,129 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
 	LDI        R18, 6
 	LDI        R17, 45
 	LDI        R16, 168
@@ -597,25 +580,25 @@ L_play_popular_song18:
 	BRNE       L_play_popular_song18
 	DEC        R18
 	BRNE       L_play_popular_song18
-;Lab4.c,127 :: 		g5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,130 :: 		g5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _g5+0
-;Lab4.c,128 :: 		a5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,131 :: 		a5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _a5+0
-;Lab4.c,129 :: 		ad5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,132 :: 		ad5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _ad5+0
-;Lab4.c,130 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
+;Lab4.c,133 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
 	LDI        R18, 6
 	LDI        R17, 45
 	LDI        R16, 168
@@ -626,28 +609,28 @@ L_play_popular_song20:
 	BRNE       L_play_popular_song20
 	DEC        R18
 	BRNE       L_play_popular_song20
-;Lab4.c,131 :: 		g5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,134 :: 		g5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _g5+0
-;Lab4.c,132 :: 		a5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,135 :: 		a5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _a5+0
-;Lab4.c,133 :: 		ad5(SIXTEENTH_NOTE_DUR);
+;Lab4.c,136 :: 		ad5(SIXTEENTH_NOTE_DUR);
 	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _ad5+0
-;Lab4.c,134 :: 		Delay_ms(HALF_NOTE_DUR);
-	LDI        R18, 42
-	LDI        R17, 167
-	LDI        R16, 57
+;Lab4.c,137 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
+	LDI        R18, 6
+	LDI        R17, 45
+	LDI        R16, 168
 L_play_popular_song22:
 	DEC        R16
 	BRNE       L_play_popular_song22
@@ -655,35 +638,28 @@ L_play_popular_song22:
 	BRNE       L_play_popular_song22
 	DEC        R18
 	BRNE       L_play_popular_song22
-	NOP
-;Lab4.c,135 :: 		d5(QUARTER_NOTE_DUR);
-	LDI        R27, 154
+;Lab4.c,138 :: 		g5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
 	MOV        R2, R27
-	LDI        R27, 1
-	MOV        R3, R27
-	CALL       _d5+0
-;Lab4.c,136 :: 		g5(QUARTER_NOTE_DUR);
-	LDI        R27, 154
-	MOV        R2, R27
-	LDI        R27, 1
+	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _g5+0
-;Lab4.c,137 :: 		ad5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
+;Lab4.c,139 :: 		a5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _a5+0
+;Lab4.c,140 :: 		ad5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _ad5+0
-;Lab4.c,138 :: 		a5(HALF_NOTE_DUR);
-	LDI        R27, 53
-	MOV        R2, R27
-	LDI        R27, 3
-	MOV        R3, R27
-	CALL       _a5+0
-;Lab4.c,139 :: 		Delay_ms(EIGTH_NOTE_DUR);
-	LDI        R18, 11
-	LDI        R17, 103
-	LDI        R16, 78
+;Lab4.c,141 :: 		Delay_ms(HALF_NOTE_DUR);
+	LDI        R18, 42
+	LDI        R17, 167
+	LDI        R16, 57
 L_play_popular_song24:
 	DEC        R16
 	BRNE       L_play_popular_song24
@@ -691,31 +667,32 @@ L_play_popular_song24:
 	BRNE       L_play_popular_song24
 	DEC        R18
 	BRNE       L_play_popular_song24
-;Lab4.c,140 :: 		d5(QUARTER_NOTE_DUR);
+	NOP
+;Lab4.c,142 :: 		d5(QUARTER_NOTE_DUR);
 	LDI        R27, 154
 	MOV        R2, R27
 	LDI        R27, 1
 	MOV        R3, R27
 	CALL       _d5+0
-;Lab4.c,141 :: 		g5(QUARTER_NOTE_DUR);
+;Lab4.c,143 :: 		g5(QUARTER_NOTE_DUR);
 	LDI        R27, 154
 	MOV        R2, R27
 	LDI        R27, 1
 	MOV        R3, R27
 	CALL       _g5+0
-;Lab4.c,142 :: 		ad5(EIGTH_NOTE_DUR);
+;Lab4.c,144 :: 		ad5(EIGTH_NOTE_DUR);
 	LDI        R27, 205
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _ad5+0
-;Lab4.c,143 :: 		a5(HALF_NOTE_DUR);
+;Lab4.c,145 :: 		a5(HALF_NOTE_DUR);
 	LDI        R27, 53
 	MOV        R2, R27
 	LDI        R27, 3
 	MOV        R3, R27
 	CALL       _a5+0
-;Lab4.c,144 :: 		Delay_ms(EIGTH_NOTE_DUR);
+;Lab4.c,146 :: 		Delay_ms(EIGTH_NOTE_DUR);
 	LDI        R18, 11
 	LDI        R17, 103
 	LDI        R16, 78
@@ -726,70 +703,34 @@ L_play_popular_song26:
 	BRNE       L_play_popular_song26
 	DEC        R18
 	BRNE       L_play_popular_song26
-;Lab4.c,145 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
+;Lab4.c,147 :: 		d5(QUARTER_NOTE_DUR);
+	LDI        R27, 154
 	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,146 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,147 :: 		f5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,148 :: 		e5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _e5+0
-;Lab4.c,149 :: 		d5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
-	MOV        R2, R27
-	LDI        R27, 0
+	LDI        R27, 1
 	MOV        R3, R27
 	CALL       _d5+0
-;Lab4.c,150 :: 		f5(EIGTH_NOTE_DUR);
+;Lab4.c,148 :: 		g5(QUARTER_NOTE_DUR);
+	LDI        R27, 154
+	MOV        R2, R27
+	LDI        R27, 1
+	MOV        R3, R27
+	CALL       _g5+0
+;Lab4.c,149 :: 		ad5(EIGTH_NOTE_DUR);
 	LDI        R27, 205
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,151 :: 		f5(EIGTH_NOTE_DUR);
-	LDI        R27, 205
+	CALL       _ad5+0
+;Lab4.c,150 :: 		a5(HALF_NOTE_DUR);
+	LDI        R27, 53
 	MOV        R2, R27
-	LDI        R27, 0
+	LDI        R27, 3
 	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,152 :: 		f5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _f5+0
-;Lab4.c,153 :: 		e5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _e5+0
-;Lab4.c,154 :: 		d5(SIXTEENTH_NOTE_DUR);
-	LDI        R27, 102
-	MOV        R2, R27
-	LDI        R27, 0
-	MOV        R3, R27
-	CALL       _d5+0
-;Lab4.c,155 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
-	LDI        R18, 6
-	LDI        R17, 45
-	LDI        R16, 168
+	CALL       _a5+0
+;Lab4.c,151 :: 		Delay_ms(EIGTH_NOTE_DUR);
+	LDI        R18, 11
+	LDI        R17, 103
+	LDI        R16, 78
 L_play_popular_song28:
 	DEC        R16
 	BRNE       L_play_popular_song28
@@ -797,19 +738,90 @@ L_play_popular_song28:
 	BRNE       L_play_popular_song28
 	DEC        R18
 	BRNE       L_play_popular_song28
-;Lab4.c,156 :: 		ad5(EIGTH_NOTE_DUR);
+;Lab4.c,152 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,153 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,154 :: 		f5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,155 :: 		e5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _e5+0
+;Lab4.c,156 :: 		d5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _d5+0
+;Lab4.c,157 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,158 :: 		f5(EIGTH_NOTE_DUR);
+	LDI        R27, 205
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,159 :: 		f5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _f5+0
+;Lab4.c,160 :: 		e5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _e5+0
+;Lab4.c,161 :: 		d5(SIXTEENTH_NOTE_DUR);
+	LDI        R27, 102
+	MOV        R2, R27
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _d5+0
+;Lab4.c,162 :: 		Delay_ms(SIXTEENTH_NOTE_DUR);
+	LDI        R18, 6
+	LDI        R17, 45
+	LDI        R16, 168
+L_play_popular_song30:
+	DEC        R16
+	BRNE       L_play_popular_song30
+	DEC        R17
+	BRNE       L_play_popular_song30
+	DEC        R18
+	BRNE       L_play_popular_song30
+;Lab4.c,163 :: 		ad5(EIGTH_NOTE_DUR);
 	LDI        R27, 205
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _ad5+0
-;Lab4.c,157 :: 		g5(EIGTH_NOTE_DUR);
+;Lab4.c,164 :: 		g5(EIGTH_NOTE_DUR);
 	LDI        R27, 205
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _g5+0
-;Lab4.c,158 :: 		}
+;Lab4.c,165 :: 		}
 L_end_play_popular_song:
 	POP        R3
 	POP        R2
@@ -822,44 +834,44 @@ _main:
 	LDI        R27, 0
 	OUT        SPL+1, R27
 
-;Lab4.c,160 :: 		void main()
-;Lab4.c,164 :: 		DDRA = 0x0f;
+;Lab4.c,167 :: 		void main()
+;Lab4.c,171 :: 		DDRA = 0x0f;
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
 	LDI        R27, 15
 	OUT        DDRA+0, R27
-;Lab4.c,165 :: 		PORTA = 0;
+;Lab4.c,172 :: 		PORTA = 0;
 	LDI        R27, 0
 	OUT        PORTA+0, R27
-;Lab4.c,166 :: 		DDRC = 0xff;
+;Lab4.c,173 :: 		DDRC = 0xff;
 	LDI        R27, 255
 	OUT        DDRC+0, R27
-;Lab4.c,167 :: 		PORTC = 0;
+;Lab4.c,174 :: 		PORTC = 0;
 	LDI        R27, 0
 	OUT        PORTC+0, R27
-;Lab4.c,169 :: 		digit = 0;
+;Lab4.c,178 :: 		digit = 0;
 	LDI        R27, 0
 	STS        _digit+0, R27
 	STS        _digit+1, R27
-;Lab4.c,170 :: 		portd_index = 0;
+;Lab4.c,179 :: 		portd_index = 0;
 	LDI        R27, 0
 	STS        _portd_index+0, R27
-;Lab4.c,171 :: 		shifter = 1; // Initial number value
+;Lab4.c,180 :: 		shifter = 1; // Initial number value
 	LDI        R27, 1
 	STS        _shifter+0, R27
-;Lab4.c,173 :: 		TCCR0 = 0x03; // ClkI/O/64 (From prescaler)
+;Lab4.c,182 :: 		TCCR0 = 0x03; // ClkI/O/64 (From prescaler)
 	LDI        R27, 3
 	OUT        TCCR0+0, R27
-;Lab4.c,175 :: 		SREG_I_bit = 1; // Interrupt enable
+;Lab4.c,184 :: 		SREG_I_bit = 1; // Interrupt enable
 	IN         R27, SREG_I_bit+0
 	SBR        R27, BitMask(SREG_I_bit+0)
 	OUT        SREG_I_bit+0, R27
-;Lab4.c,176 :: 		TOIE0_bit = 1;  // Timer0 overflow interrupt enable
+;Lab4.c,185 :: 		TOIE0_bit = 1;  // Timer0 overflow interrupt enable
 	IN         R27, TOIE0_bit+0
 	SBR        R27, BitMask(TOIE0_bit+0)
 	OUT        TOIE0_bit+0, R27
-;Lab4.c,178 :: 		Sound_Init(&PORTB, 1); // Initialize sound pin
+;Lab4.c,187 :: 		Sound_Init(&PORTB, 1); // Initialize sound pin
 	LDI        R27, 1
 	MOV        R4, R27
 	LDI        R27, #lo_addr(PORTB+0)
@@ -867,11 +879,11 @@ _main:
 	LDI        R27, hi_addr(PORTB+0)
 	MOV        R3, R27
 	CALL       _Sound_Init+0
-;Lab4.c,181 :: 		task1();
+;Lab4.c,190 :: 		task1();
 	CALL       _task1+0
-;Lab4.c,183 :: 		play_popular_song();
+;Lab4.c,192 :: 		play_popular_song();
 	CALL       _play_popular_song+0
-;Lab4.c,184 :: 		}
+;Lab4.c,193 :: 		}
 L_end_main:
 	POP        R4
 	POP        R3

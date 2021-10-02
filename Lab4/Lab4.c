@@ -55,8 +55,10 @@ void task1()
             PORTD = sequence[j];
             enter_value_to_portd_array(PORTD);
             Sound_Play(1397, 100);
-            Delay_ms(1000); // Do we need to change that?
+            Delay_ms(250); // Do we need to change that?
             j++;
+            if (PINA7_bit)
+             return;
         }
         Sound_Play(440, 100);
         j--;
@@ -65,9 +67,14 @@ void task1()
             PORTD = sequence[j];
             enter_value_to_portd_array(PORTD);
             Sound_Play(1318, 100);
-            Delay_ms(1000); // Do we need to change that?
+            Delay_ms(250); // Do we need to change that?
             j--;
+            if (PINA7_bit)
+             return;
         }
+        
+
+
     }
 }
 
@@ -165,6 +172,8 @@ void main()
         PORTA = 0;
         DDRC = 0xff;
         PORTC = 0;
+
+
 
         digit = 0;
         portd_index = 0;

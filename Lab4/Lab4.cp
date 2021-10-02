@@ -1,6 +1,6 @@
-#line 1 "F:/Programs/mikroC PRO for AVR/Examples/Lab4/Lab4.c"
-#line 1 "f:/programs/mikroc pro for avr/include/built_in.h"
-#line 10 "F:/Programs/mikroC PRO for AVR/Examples/Lab4/Lab4.c"
+#line 1 "Z:/gitProj/MCU-Labs/Lab4/Lab4.c"
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for avr/include/built_in.h"
+#line 10 "Z:/gitProj/MCU-Labs/Lab4/Lab4.c"
 int num_mask[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
 
 unsigned short shifter, portd_index;
@@ -49,8 +49,10 @@ void task1()
  PORTD = sequence[j];
  enter_value_to_portd_array(PORTD);
  Sound_Play(1397, 100);
- Delay_ms(1000);
+ Delay_ms(250);
  j++;
+ if (PINA7_bit)
+ return;
  }
  Sound_Play(440, 100);
  j--;
@@ -59,9 +61,14 @@ void task1()
  PORTD = sequence[j];
  enter_value_to_portd_array(PORTD);
  Sound_Play(1318, 100);
- Delay_ms(1000);
+ Delay_ms(250);
  j--;
+ if (PINA7_bit)
+ return;
  }
+
+
+
  }
 }
 
@@ -159,6 +166,8 @@ void main()
  PORTA = 0;
  DDRC = 0xff;
  PORTC = 0;
+
+
 
  digit = 0;
  portd_index = 0;
