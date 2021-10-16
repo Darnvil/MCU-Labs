@@ -1,4 +1,4 @@
-#line 1 "C:/Users/Andrey/Documents/GitHub/MCU-Labs/LR3/LR3.c"
+#line 1 "Z:/gitProj/MCU-Labs/LR3/LR3.c"
 
 
 sbit LCD_RS at PORTA2_bit;
@@ -17,26 +17,23 @@ sbit LCD_D7_Direction at DDC7_bit;
 
 
 int arr[10] = {9, 73, 62, 48, 55, 93, 40, 12, 32, 74};
- char txt1[] = "Ульянов А.И.";
+ char txt1[] = "Ulyanov A. I.";
  char txt2[] = "04.09.2000";
  char txt3[] = "Hello!";
  char txt4[] = "15.10.2021";
- char txt5[] = "ул. Тёплый Стан";
- char txt6[] = "м. Юго-Западная";
- char txt7[] = "№23; Микропроц.";
- char txt8[] = "системы";
- char txt9[] = "Информатика и";
- char txt10[] = "выч. техника";
- char txt11[] = "Выч. машины";
- char txt12[] = "комплексы";
- char txt13[] = "системы и сети";
+ char txt5[] = "Tepliy Stan st.";
+ char txt6[] = "Yugo-Zapadnaya";
+ char txt7[] = "#23; Microproc.";
+ char txt8[] = "systems";
+ char txt9[] = "Informatics and";
+ char txt10[] = "Comp. Machines";
+ char txt11[] = "Comp. machines";
+ char txt12[] = "Complexes";
+ char txt13[] = "Systems and Nets";
 int i;
 int mIn_, max_;
 
-void main() {
- Lcd_Init();
- Lcd_Cmd(_LCD_CURSOR_OFF);
-}
+
 
 void task2(){
  max_ = arr[0];
@@ -70,7 +67,6 @@ void task1_2(){
 }
 void task1_3(){
  Lcd_Cmd(_LCD_CLEAR);
- txt1[] = "3434"
  Lcd_Out(1,1,txt5);
  Lcd_Out(2,1,txt6);
 }
@@ -87,13 +83,107 @@ void task1_5(){
  Lcd_Out(2,1,txt10);
 }
 void task1_6(){
+ while(1)
+ {
  Lcd_Cmd(_LCD_CLEAR);
 
  Lcd_Out(1,1,txt11);
  Lcd_Out(2,1,txt12);
  Delay_ms(1000);
+
+ if(PINB0_bit)
+ return;
+
  Lcd_Cmd(_LCD_CLEAR);
 
  Lcd_Out(1,1,txt13);
  Delay_ms(1000);
+
+ if(PINB0_bit)
+ return;
+ }
+}
+
+void task1()
+{
+ while(1)
+ {
+ if(PINB7_bit)
+ {
+ task1_1();
+ }
+ while(PINB7_bit);
+
+ if(PINB6_bit)
+ {
+ task1_2();
+ }
+ while(PINB6_bit);
+
+ if(PINB5_bit)
+ {
+ task1_3();
+ }
+ while(PINB5_bit);
+
+ if(PINB4_bit)
+ {
+ task1_4();
+ }
+ while(PINB4_bit);
+
+ if(PINB3_bit)
+ {
+ task1_5();
+ }
+ while(PINB3_bit);
+
+ if(PINB2_bit)
+ {
+ task1_6();
+ }
+ while(PINB2_bit);
+
+ if(PINB0_bit)
+ {
+ return;
+ }
+ while(PINB0_bit);
+ }
+}
+
+void task_picker()
+{
+ while(1)
+ {
+ if(PINB7_bit)
+ {
+ task1();
+ }
+ while(PINB7_bit);
+
+ if(PINB6_bit)
+ {
+ task2();
+ }
+ while(PINB6_bit);
+
+ if(PINB5_bit)
+ {
+ task3();
+ }
+ while(PINB5_bit);
+ }
+}
+
+
+void main() {
+ DDRB = 0x00;
+ DDRC = 0xFF;
+ PORTB = 0x00;
+
+ Lcd_Init();
+
+
+ task_picker();
 }

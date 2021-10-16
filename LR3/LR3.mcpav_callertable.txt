@@ -2,8 +2,36 @@ main
 	Lcd_Init
 		Delay_5500us
 		Delay_1us
-	Lcd_Cmd
-		Delay_1us
-		Delay_5500us
-		Delay_50us
+	task_picker
+		task1
+			task1_1
+				Lcd_Cmd
+					Delay_1us
+					Delay_5500us
+					Delay_50us
+				Lcd_Out
+					Lcd_Cmd
+					Lcd_Chr_CP
+						Lcd_Cmd
+			task1_2
+				Lcd_Cmd
+				Lcd_Out
+			task1_3
+				Lcd_Cmd
+				Lcd_Out
+			task1_4
+				Lcd_Cmd
+				Lcd_Out
+			task1_5
+				Lcd_Cmd
+				Lcd_Out
+			task1_6
+				Lcd_Cmd
+				Lcd_Out
+		task2
+			Lcd_Cmd
+			Lcd_Out
+		task3
+			Lcd_Out_CP
+				Lcd_Chr_CP
 	__CC2DW

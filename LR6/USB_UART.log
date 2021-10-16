@@ -1,0 +1,12 @@
+0	1	mikrocAVR.exe -MSF -DBG -pATMEGA32 -DL -SSA -O11111114 -fo8 -BOOTSZ2048 -BOOTOP0 -N"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Examples\Development systems\EasyAVR7\USB UART\USB_UART.mcpav" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Uses\lte64kw\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Examples\Development systems\EasyAVR7\USB UART\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Uses\lte64kw\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Examples\Development systems\EasyAVR7\USB UART\" "USB_UART.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CString.mcl" "__Lib_ADC_ref3.mcl" "__Lib_UART_d01_ursel.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl"	 
+diagnostics: 0	122	Compilation Started	USB_UART.c
+warning: 30	1509	Generated baud rate is 9615 bps (error = 0.16 percent)	USB_UART.c
+diagnostics: 62	123	Compiled Successfully	USB_UART.c
+diagnostics: 0	127	All files Compiled in 32 ms	 
+hint: 0	1144	Used RX (bytes): 14 (44%)   Free RX (bytes): 18 (56%)	Used RX (bytes): 14 (44%)   Free RX (bytes): 18 (56%)
+hint: 0	1144	Static RAM (bytes): 17   Dynamic RAM (bytes): 2031	Static RAM (bytes): 17   Dynamic RAM (bytes): 2031
+hint: 0	1144	Used ROM (bytes): 1333 (5%)  Free ROM (bytes): 27339 (95%)	Used ROM (bytes): 1333 (5%)  Free ROM (bytes): 27339 (95%)
+diagnostics: 0	125	Project Linked Successfully	USB_UART.mcpav
+diagnostics: 0	128	Linked in 15 ms	 
+diagnostics: 0	129	Project 'USB_UART.mcpav' completed: 203 ms	 
+diagnostics: 0	103	Finished successfully: 16 окт 2021, 19:06:02	USB_UART.mcpav

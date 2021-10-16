@@ -20,30 +20,103 @@ int arr[4];
 int i = 1;
 int converted;
 char c [5];
-int old_max = 1023, new_max = 645, old_min = 0, new_min = 0, old_range, new_range;
 
-int get_converted_value(unsigned int value_to_convert)
+
+int num_mask[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71};
+
+unsigned short shifter, portd_index;
+unsigned int digit, k ;
+unsigned short portd_array[4] = {0, 0, 0, 0};
+
+
+
+void Timer0Overflow_ISR() org IVT_ADDR_TIMER0_OVF {
+ PORTA = 0;
+ PORTC = portd_array[portd_index];
+ PORTA = shifter;
+
+
+ shifter <<= 1;
+ if (shifter > 8u)
+ shifter = 1;
+
+
+ portd_index++ ;
+ if (portd_index > 3u)
+ portd_index = 0;
+}
+
+void clear_portd()
 {
- int new_value = (((value_to_convert - old_min) * new_range) / old_range) + new_min;
- return new_value;
+ for (i = 0; i < 4; ++i)
+ portd_array[i] = 0;
+}
+
+void task1()
+{
+ TCCR0 = 0x03;
+
+ SREG_I_bit = 1;
+ TOIE0_bit = 1;
+
+ while(1)
+ {
+
+ while (acd > 0)
+ {
+ digit = num_mask[acd % 10];
+ adc_rd /= 10;
+ portd_array[i] = digit;
+ i++;
+ }
+ }
+}
+
+void task2()
+{
+
+}
+
+void task_picker()
+{
+ while(1)
+ {
+
+ if(PORTB7_bit)
+ {
+ task1();
+ }
+ while (PORTB7_bit);
+
+ if (PORTB6_bit)
+ {
+ task2();
+ }
+ while(PORTB6_bit);
+ }
 }
 
 void main() {
- DDRB = 0xFF;
+ DDRB = 0x00;
  DDRC = 0xFF;
+ DDRA = 0x0F;
+
+ PORTB = 0x00;
+
+ digit = 0;
+ portd_index = 0;
+ shifter = 1;
 
  Lcd_Init();
  Lcd_Cmd(_LCD_CLEAR);
  Lcd_Cmd(_LCD_CURSOR_OFF);
 
- old_range = old_max - old_min;
- new_range = new_max - new_min;
-
- while (1){
+ while (1)
+ {
  Lcd_Out(1,6,message);
- adc_rd = ADC_Read(5)/1;
+ adc_rd = ADC_Read(5);
  PORTB = adc_rd;
- converted = get_converted_value(adc_rd);
+ converted = adc_rd / 1.564;
  IntToStr(converted, c);
 
  Lcd_Out(2,6,c);
@@ -51,4 +124,5 @@ void main() {
  Lcd_Cmd(_LCD_CLEAR);
  PORTC =  ((char *)&adc_rd)[1] ;
  }
+
 }

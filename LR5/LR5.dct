@@ -2238,6 +2238,7 @@ cl_white
 cl_white_16bit
 cl_yellow
 cl_yellow_16bit
+clear_portd
 clearalpha
 clearalpha
 clearalpha
@@ -2436,6 +2437,7 @@ delay_5ms
 delay_80us
 delay_8ms
 delay_cyc
+digit
 display
 display
 display
@@ -3741,7 +3743,6 @@ g
 g
 g
 g
-get_converted_value
 get_fosc_khz
 gicr
 gifr
@@ -3960,6 +3961,7 @@ jtd
 jtd_bit
 jtrf
 jtrf_bit
+k
 keypad_init
 keypad_key_click
 keypad_key_press
@@ -4137,10 +4139,8 @@ mux4_bit
 name
 name
 name
-new_max
-new_min
-new_range
 nr_free_blocks
+num_mask
 ocdr
 ocf0
 ocf0_bit
@@ -4262,9 +4262,6 @@ ocr2_7
 ocr2_7_bit
 ocr2ub
 ocr2ub_bit
-old_max
-old_min
-old_range
 opr
 opr
 opr
@@ -4448,6 +4445,8 @@ portc6_bit
 portc7
 portc7_bit
 portd
+portd_array
+portd_index
 portd0
 portd0_bit
 portd1
@@ -4723,6 +4722,7 @@ sec
 sec
 sec
 sfior
+shifter
 shorttohex
 shorttostr
 sin
@@ -5325,6 +5325,9 @@ tag
 tag
 tan
 tanh
+task_picker
+task1
+task2
 tccr0
 tccr1a
 tccr1b
@@ -5566,6 +5569,7 @@ time_datediff
 time_datetoepoch
 time_epochtodate
 time_jd1970
+timer0overflow_isr
 timsk
 toie0
 toie0_bit
