@@ -1907,6 +1907,7 @@ _uart_noparity
 _uart_oddparity
 _uart_one_stopbit
 _uart_two_stopbits
+a
 abchannelhsampfactor
 abchannelhsampfactor
 abchannelhuffactablemap
@@ -2082,6 +2083,7 @@ b
 b
 b
 b
+b
 b0
 b1
 b2
@@ -2197,6 +2199,8 @@ cf_read_sector
 cf_write_byte
 cf_write_init
 cf_write_sector
+ch
+character
 character8x7
 charsetdsc
 charsetdsc
@@ -2349,6 +2353,7 @@ currrect
 cursor
 cursor
 cursor
+customchar
 dda0
 dda0_bit
 dda1
@@ -2529,6 +2534,7 @@ externalfontset
 externalfontset_16bit
 extrf
 extrf_bit
+f
 f16_boot_template
 f16_filedesc
 f16_sector
@@ -3950,6 +3956,7 @@ ivt_addr_twi
 ivt_addr_usart__rxc
 ivt_addr_usart__txc
 ivt_addr_usart__udre
+j
 jpegdecoder
 jpegdecoder_16bit
 jtd
@@ -4370,6 +4377,7 @@ pitch
 pixelformat
 pixelformat
 pixelformat
+pixels
 play
 play
 play
@@ -4558,6 +4566,7 @@ renderwritetrigger
 renderwritetrigger
 renderwritetrigger
 rep_start
+res
 rev
 rev
 rev
@@ -5326,6 +5335,8 @@ task1_5
 task1_6
 task2
 task3
+task4
+task5
 tccr0
 tccr1a
 tccr1b
@@ -5402,6 +5413,9 @@ tcnt2_7
 tcnt2_7_bit
 tcr2ub
 tcr2ub_bit
+temp
+text
+text1
 tft_16bit_circle
 tft_16bit_color16bittorgb
 tft_16bit_defaultfont
@@ -5964,6 +5978,7 @@ x
 xh
 xl
 xtoi
+xx
 y
 y
 y

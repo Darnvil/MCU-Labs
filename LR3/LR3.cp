@@ -1,4 +1,4 @@
-#line 1 "Z:/gitProj/MCU-Labs/LR3/LR3.c"
+#line 1 "C:/Users/Andrey/Documents/GitHub/MCU-Labs/LR3/LR3.c"
 
 
 sbit LCD_RS at PORTA2_bit;
@@ -15,7 +15,7 @@ sbit LCD_D6_Direction at DDC6_bit;
 sbit LCD_D7_Direction at DDC7_bit;
 
 
-
+char character[8];
 int arr[10] = {9, 73, 62, 48, 55, 93, 40, 12, 32, 74};
  char txt1[] = "Ulyanov A. I.";
  char txt2[] = "04.09.2000";
@@ -30,10 +30,14 @@ int arr[10] = {9, 73, 62, 48, 55, 93, 40, 12, 32, 74};
  char txt11[] = "Comp. machines";
  char txt12[] = "Complexes";
  char txt13[] = "Systems and Nets";
-int i;
+ char text[]="The next station is RTU MIREA";
+ char text1[16];
+int i,j,a,b,res;
 int mIn_, max_;
-
-
+int temp = 0;
+int xx[13] = {0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768};
+int F;
+char ch;
 
 void task2(){
  max_ = arr[0];
@@ -47,10 +51,94 @@ void task2(){
  min_ = arr[i];
  }
  }
- Lcd_Out(1,2,txt1);
+ Lcd_Out_CP("Max = ");
+ Lcd_Out_CP(max_);
+ Lcd_Out_CP("; Min = ");
+ Lcd_Out_CP(min_);
 }
 void task3(){
+ Lcd_Cmd(_LCD_CLEAR);
+ Lcd_Out_CP("(2a^2 - 4b)/5\n");
  Lcd_Out_CP(500);
+ a = rand() % 10;
+ b = rand() % 10;
+ res = (2 * a * a - 4 * b) / 5;
+ Lcd_Out_CP("A=");
+ Lcd_Out_CP(a);
+ Lcd_Out_CP(" B=");
+ Lcd_Out_CP("b");
+ Lcd_Out_CP("; ");
+ Lcd_Out_CP(res);
+}
+
+void Pixels(int F){
+ switch(F){
+ case 1:
+ character[2] = 16;
+ character[3] = 16;
+ character[4] = 16;
+ character[5] = 16;
+ break;
+ case 2:
+ character[2] = 24;
+ character[3] = 24;
+ character[4] = 24;
+ character[5] = 24;
+ break;
+ case 3:
+ character[2] = 28;
+ character[3] = 28;
+ character[4] = 28;
+ character[5] = 28;
+ break;
+ case 4:
+ character[2] = 30;
+ character[3] = 30;
+ character[4] = 30;
+ character[5] = 30;
+ break;
+ default:
+ character[2] = 31;
+ character[3] = 31;
+ character[4] = 31;
+ character[5] = 31;
+ }
+
+}
+
+void CustomChar(int F) {
+ Lcd_Cmd(64);
+ for (j=0;F>0;j+=4) {
+ Pixels(F);
+ for (ch = 2; ch<=5; ch++) Lcd_Chr_CP(character[ch]);
+ Lcd_Cmd(_LCD_RETURN_HOME);
+ Lcd_Chr(0, j, 0);
+ F-=4;
+ }
+}
+
+void task4(){
+
+ F = abs(2*xx[rand()%12]-768)/16;
+ Lcd_Cmd(_LCD_CLEAR);
+ CustomChar(F);
+}
+
+
+void task5(){
+ i = 0;
+ while(1)
+ {
+ Lcd_Cmd(_LCD_CLEAR);
+ for (i = 0; i < 16; i++)
+ {
+ text1[i] = text[i+temp%29];
+ }
+ Lcd_Out(1,1,text1);
+ delay_ms(1000);
+ temp++;
+ if (temp == 22) temp = 0;
+ }
 }
 
 void task1_1(){
@@ -173,6 +261,16 @@ void task_picker()
  task3();
  }
  while(PINB5_bit);
+ if(PINB4_bit)
+ {
+ task4();
+ }
+ while(PINB4_bit);
+ if(PINB3_bit)
+ {
+ task5();
+ }
+ while(PINB3_bit);
  }
 }
 
@@ -183,7 +281,6 @@ void main() {
  PORTB = 0x00;
 
  Lcd_Init();
-
 
  task_picker();
 }

@@ -30,8 +30,29 @@ main
 				Lcd_Out
 		task2
 			Lcd_Cmd
-			Lcd_Out
-		task3
 			Lcd_Out_CP
 				Lcd_Chr_CP
+		task3
+			Lcd_Cmd
+			Lcd_Out_CP
+			rand
+				srand
+				Mul_32x32
+			Div_16x16_S
+			HWMul_16x16
+		task4
+			abs
+			rand
+			Lcd_Cmd
+			CustomChar
+				Lcd_Cmd
+				Pixels
+				Lcd_Chr_CP
+				Lcd_Chr
+					Lcd_Cmd
+			Div_16x16_S
+		task5
+			Lcd_Cmd
+			Lcd_Out
+			Div_16x16_S
 	__CC2DW

@@ -1,6 +1,22 @@
 [DEVICE]
 Name=ATMEGA32
 Clock=10000000
+[MEMORY_MODEL]
+Value=0
+[BUILD_TYPE]
+Value=0
+[ACTIVE_TAB]
+Value=LR3.c
+[USE_EEPROM]
+Value=0
+[USE_HEAP]
+Value=0
+[HEAP_SIZE]
+Value=0
+[EEPROM_DEFINITION]
+Value=
+[BOOT_TYPE]
+Value=0
 [FILES]
 File0=LR3.c
 Count=1
@@ -20,17 +36,17 @@ Count=0
 Count=0
 [SEARCH_PATH]
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Uses\lte64kw\
-Path1=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FAT32 Library\Uses\
-Path2=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT800\Uses\
-Path3=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT810\Uses\
-Path4=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT812\Uses\
+Path1=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FAT32 Library\Uses\
+Path2=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT800\Uses\
+Path3=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT810\Uses\
+Path4=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT812\Uses\
 Count=5
 [HEADER_PATH]
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Uses\lte64kw\
-Path1=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FAT32 Library\Uses\
-Path2=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT800\Uses\
-Path3=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT810\Uses\
-Path4=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT812\Uses\
+Path1=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FAT32 Library\Uses\
+Path2=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT800\Uses\
+Path3=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT810\Uses\
+Path4=..\..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for AVR\Packages\FT812\Uses\
 Count=5
 [HEADERS]
 Count=0
@@ -104,21 +120,7 @@ File63=Trigonometry
 File64=TWI
 File65=UART
 Count=66
-[MEMORY_MODEL]
-Value=0
-[BUILD_TYPE]
-Value=0
-[ACTIVE_TAB]
-Value=LR3.c
-[USE_EEPROM]
-Value=0
-[USE_HEAP]
-Value=0
-[HEAP_SIZE]
-Value=0
-[EEPROM_DEFINITION]
-Value=
-[BOOT_TYPE]
-Value=0
 [EXPANDED_NODES]
-Count=0
+0=LR3.mcpav
+1=Sources
+Count=2
