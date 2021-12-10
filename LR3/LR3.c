@@ -1,4 +1,3 @@
-
   // LCD module connections
 sbit LCD_RS at PORTA2_bit;
 sbit LCD_EN at PORTD6_bit;
@@ -14,7 +13,13 @@ sbit LCD_D6_Direction at DDC6_bit;
 sbit LCD_D7_Direction at DDC7_bit;
 // End LCD module connections
 
+const char character16[8] = { 0, 0, 16, 16, 16, 16, 0, 0 };
+const char character24[8] = { 0, 0, 24, 24, 24, 24, 0, 0 };
+const char character28[8] = { 0, 0, 28, 28, 28, 28, 0, 0 };
+const char character30[8] = { 0, 0, 30, 30, 30, 30, 0, 0 };
+const char character31[8] = { 0, 0, 31, 31, 31, 31, 0, 0 };
 char character[8];
+
 int arr[10] = {9, 73, 62, 48, 55, 93, 40, 12, 32, 74};
    char txt1[] = "Ulyanov A. I.";
    char txt2[] = "04.09.2000";
@@ -32,11 +37,13 @@ int arr[10] = {9, 73, 62, 48, 55, 93, 40, 12, 32, 74};
    char text[]="The next station is RTU MIREA";   //29
    char text1[16];
 int i,j,a,b,res;
-int mIn_, max_;
+int min_, max_;
 int temp = 0;
 int xx[13] = {0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768};
 int F;
 char ch;
+char ch_p[3];
+int cmd = 64;
 
 void task2(){
      max_ = arr[0];
@@ -51,78 +58,156 @@ void task2(){
        }
     }
     Lcd_Out_CP("Max = ");
-    Lcd_Out_CP(max_);
-    Lcd_Out_CP("; Min = ");
-    Lcd_Out_CP(min_);
+    IntToStr(max_, ch_p);
+    //ch_p[2]= '\0';
+    Lcd_Out_CP(ch_p + 4);
+    Lcd_Out_CP(";");
+    Lcd_Cmd(_LCD_SECOND_ROW);
+    Lcd_Out_CP("Min = ");
+    IntToStr(min_, ch_p);
+    Lcd_Out_CP(ch_p + 4);
 }
 void task3(){
     Lcd_Cmd(_LCD_CLEAR);
-    Lcd_Out_CP("(2a^2 - 4b)/5\n");
-    Lcd_Out_CP(500);
+    Lcd_Out_CP("(2a^2 - 4b)/5");
+    Lcd_Cmd(_LCD_SECOND_ROW);
      a = rand() % 10;
      b = rand() % 10;
      res = (2 * a * a - 4 * b) / 5;
      Lcd_Out_CP("A=");
-     Lcd_Out_CP(a);
+     IntToStr(a, ch_p);
+     Lcd_Out_CP(ch_p + 4);
      Lcd_Out_CP(" B=");
-     Lcd_Out_CP("b");
+     IntToStr(b, ch_p);
+     Lcd_Out_CP(ch_p + 4);
      Lcd_Out_CP("; ");
-     Lcd_Out_CP(res);
+     IntToStr(res, ch_p);
+     Lcd_Out_CP(ch_p + 4);
 }
 
 void Pixels(int F){
-   switch(F){
+  /*switch(F){
       case 1:
-         character[2] = 16;
-         character[3] = 16;
-         character[4] = 16;
-         character[5] = 16;
+
+           character = character16;
          break;
       case 2:
-         character[2] = 24;
-         character[3] = 24;
-         character[4] = 24;
-         character[5] = 24;
+           character = character24;
+
          break;
       case 3:
-         character[2] = 28;
-         character[3] = 28;
-         character[4] = 28;
-         character[5] = 28;
+           character = character28;
          break;
       case 4:
-         character[2] = 30;
-         character[3] = 30;
-         character[4] = 30;
-         character[5] = 30;
+           character = character30;
          break;
       default:
-         character[2] = 31;
-         character[3] = 31;
-         character[4] = 31;
-         character[5] = 31;
-   }
-
+           character = character31;
+   }*/
 }
 
-void CustomChar(int F) {
-     Lcd_Cmd(64);
-     for (j=0;F>0;j+=4) {
-     Pixels(F);
-     for (ch = 2; ch<=5; ch++) Lcd_Chr_CP(character[ch]);
-     Lcd_Cmd(_LCD_RETURN_HOME);
-     Lcd_Chr(0, j, 0);
-     F-=4;
+void CustomChar(int F_1) {
+
+     //F = 48;
+     a = 0;
+     for (j=1;F_1>0;j++) {
+     //Pixels(F);
+     switch(F_1){
+      case 1:
+
+           cmd = 96;
+           a = 4;
+
+         break;
+      case 2:
+
+           cmd = 88;
+           a = 3;
+
+         break;
+      case 3:
+
+           cmd = 80;
+           a = 2;
+
+         break;
+      case 4:
+
+           cmd = 72;
+           a = 1;
+
+         break;
+      default:
+
+           cmd = 64;
+           a = 0;
+
+      }
+     
+     Lcd_Cmd(cmd);                      // F - 2
+     for (ch = 0; ch<=7; ch++)
+     {
+       switch(F_1){
+      case 1:
+
+           Lcd_Chr_CP(character16[ch]);
+           //Lcd_Chr(2, 2, '1');
+
+         break;
+      case 2:
+
+           Lcd_Chr_CP(character24[ch]);
+           //Lcd_Chr(2, 2, '2');
+
+         break;
+      case 3:
+
+           Lcd_Chr_CP(character28[ch]);
+           //Lcd_Chr(2, 2, '3');
+
+         break;
+      case 4:
+
+           Lcd_Chr_CP(character30[ch]);
+           //Lcd_Chr(2, 2, '4');
+
+         break;
+      default:
+
+           Lcd_Chr_CP(character31[ch]);
+           //Lcd_Chr(2, 2, '5');
+
+      }
+      //Delay_ms(100);
      }
+
+     Lcd_Cmd(_LCD_RETURN_HOME);
+     Lcd_Chr(1, j, a);
+
+     F_1 -=5;
+
+     }
+
+     
+
 }
 
 void task4(){
- //F = abs(2*x-768)
-   F = abs(2*xx[rand()%12]-768)/16;
-   Lcd_Cmd(_LCD_CLEAR);
-   CustomChar(F);
-}
+//xx[rand()%12]
 
+   F = abs(2*xx[rand()%12]-768);
+
+   Lcd_Cmd(_LCD_CLEAR);
+   cmd = 64;
+
+
+     //Lcd_Cmd(_LCD_SECOND_ROW);
+      CustomChar(F/16);
+      Lcd_Cmd(_LCD_RETURN_HOME);
+      Lcd_Cmd(_LCD_SECOND_ROW);
+      IntToStr(F, ch_p);
+      Lcd_Out_CP(ch_p );
+}
 
 void task5(){
    i = 0;
@@ -134,7 +219,7 @@ void task5(){
       text1[i] = text[i+temp%29];
     }
     Lcd_Out(1,1,text1);
-    delay_ms(1000);
+    Delay_ms(400);
     temp++;
     if (temp == 22) temp = 0;
     }
@@ -273,13 +358,12 @@ void task_picker()
     }
 }
 
-
 void main() {
    DDRB = 0x00;
    DDRC = 0xFF;
    PORTB = 0x00;
    
    Lcd_Init(); //
-   //Lcd_Cmd(_LCD_CURSOR_OFF); //
+   Lcd_Cmd(_LCD_CURSOR_OFF); //
    task_picker();
 }

@@ -2,13 +2,14 @@ main
 	Lcd_Init
 		Delay_5500us
 		Delay_1us
+	Lcd_Cmd
+		Delay_1us
+		Delay_5500us
+		Delay_50us
 	task_picker
 		task1
 			task1_1
 				Lcd_Cmd
-					Delay_1us
-					Delay_5500us
-					Delay_50us
 				Lcd_Out
 					Lcd_Cmd
 					Lcd_Chr_CP
@@ -32,12 +33,16 @@ main
 			Lcd_Cmd
 			Lcd_Out_CP
 				Lcd_Chr_CP
+			IntToStr
+				WordToStr
+					Div_16x16_U
 		task3
 			Lcd_Cmd
 			Lcd_Out_CP
 			rand
 				srand
 				Mul_32x32
+			IntToStr
 			Div_16x16_S
 			HWMul_16x16
 		task4
@@ -46,10 +51,11 @@ main
 			Lcd_Cmd
 			CustomChar
 				Lcd_Cmd
-				Pixels
 				Lcd_Chr_CP
 				Lcd_Chr
 					Lcd_Cmd
+			IntToStr
+			Lcd_Out_CP
 			Div_16x16_S
 		task5
 			Lcd_Cmd
